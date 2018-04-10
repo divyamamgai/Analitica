@@ -2,7 +2,7 @@
   <div class="container" style="margin-bottom: 3rem">
     <div class="row">
       <div class="col-xs-12 col-sm-12 text-center">
-        <h2>Welcome Admin</h2>
+        <h2>Welcome <span :title="user.email">{{ user.email.split('@')[0] }}</span></h2>
       </div>
     </div>
     <div class="row">
@@ -35,6 +35,13 @@
         </div>
       </div>
     </div>
+    <hr>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12">
+        <graph></graph>
+      </div>
+    </div>
+    <hr>
     <div class="row">
       <div class="col-xs-12 col-sm-12 text-center">
         <h3>Tracking Information</h3>
@@ -79,9 +86,11 @@
   import TopCountries from './TopCountries.vue'
   import TopBrowsers from './TopBrowsers.vue'
   import TopScreenResolutions from './TopScreenResolutions.vue'
+  import Graph from './Graph.vue'
 
   export default {
     components: {
+      Graph,
       TopScreenResolutions,
       TopBrowsers,
       TopCountries,

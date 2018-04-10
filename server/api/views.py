@@ -1,12 +1,14 @@
 import django.db.utils as db_utils
 import django.db.models as db_models
+import django.db.models.functions as db_functions
+import django.db.models.fields as db_fields
 from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from datetime import timedelta
+from datetime import timedelta, datetime
 from django.utils import timezone
 
 from analitica import models
@@ -224,3 +226,30 @@ def analytics_top_screen_resolutions(request):
                              .order_by('-total')[:10]
     return Response({'screen_resolutions': screen_resolutions},
                     status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated,))
+def analytics_graph(request):
+    """
+    API endpoint that gives analytics information about the top screen
+    resolutions.
+    """
+    start_date = request.GET.get('start_date', None)
+    end_date = request.GET.get('end_date', None)
+    if start_date is None or end_date is None:
+        return Response({'detail': 'Invalid dates are provided.'},
+                        status=status.HTTP_400_BAD_REQUEST)
+    try:
+        start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+        end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+    except (ValueError, TypeError):
+        return Response({'detail': 'Invalid dates are provided.'},
+                        status=status.HTTP_400_BAD_REQUEST)
+    graph = models.Visit.objects \
+        .filter(created_at__gte=start_date, created_at__lt=end_date) \
+        .extra(select={'date': 'strftime("%%Y-%%m-%%d", created_at)',
+                       'hour': 'strftime("%%H", created_at)'}) \
+        .values('date', 'hour') \
+        .annotate(total=db_models.Count('url'))
+    return Response(graph, status=status.HTTP_200_OK)

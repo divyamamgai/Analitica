@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'analytics/top/browsers/$', views.analytics_top_browsers),
     url(r'analytics/top/screen_resolutions/$',
         views.analytics_top_screen_resolutions),
+    url(r'analytics/graph/$', views.analytics_graph),
 ]

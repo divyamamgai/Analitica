@@ -161,5 +161,23 @@ export const Analytics = {
     }).catch(error => {
       console.error(error)
     })
+  },
+  graph (startDate, endDate) {
+    return axios({
+      method: 'GET',
+      url: API + '/analytics/graph/',
+      params: {
+        start_date: startDate,
+        end_date: endDate
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ' + User.get().token
+      }
+    }).then(result => {
+      return result.data
+    }).catch(error => {
+      console.error(error)
+    })
   }
 }

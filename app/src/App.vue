@@ -96,18 +96,32 @@
       letter-spacing: 0.2rem;
       background-color: #cdcdcd;
       color: #565656;
-      border: solid 0.1rem #898989;
+      border: solid 0.1rem #b0b0b0;
       cursor: pointer;
+      outline: none;
 
       &:hover {
         background-color: #dedede;
         color: #454545;
-        border-color: #a4a4a4;
+        border-color: #c0c0c0;
+      }
+
+      &:active {
+        box-shadow: inset 0 0.1rem 0.5rem rgba(0, 0, 0, 0.2);
       }
     }
 
-    table {
+    .table {
       font-size: 1.4rem;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+
+      td, th {
+        border-color: #cdcdcd;
+      }
+
+      tbody tr:hover {
+        background-color: #e9e9e9;
+      }
 
       .consolidated-stat {
         font-size: 1.8rem;
