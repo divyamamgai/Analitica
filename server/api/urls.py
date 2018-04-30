@@ -1,6 +1,7 @@
 from django.conf.urls import url
-from . import views
 from rest_framework.authtoken import views as rest_framework_auth_views
+
+from . import views
 
 app_name = 'api'
 

@@ -1,15 +1,14 @@
-import django.db.utils as db_utils
+from datetime import timedelta, datetime
+
 import django.db.models as db_models
-import django.db.models.functions as db_functions
-import django.db.models.fields as db_fields
+import django.db.utils as db_utils
 from django.contrib.auth import authenticate
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from datetime import timedelta, datetime
-from django.utils import timezone
 
 from analitica import models
 

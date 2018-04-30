@@ -8,7 +8,11 @@
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
-    "build": "node build/build.js"
+    "build": "npm run build:tracker && node build/build.js",
+    "build:tracker": "npm run build:tracker:js && npm run minify:tracker:js",
+    "build:tracker:js": "fuse -i ./static_src/js/tracker.js -o ./static/js/tracker.js",
+    "minify:tracker:js": "uglifyjs ./static/js/tracker.js > ./static/js/tracker.min.js -mc && rm ./static/js/tracker.js",
+    "watch:tracker:js": "watch \"npm run build:tracker\" ./static_src/js/tracker.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -63,7 +67,10 @@
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "fuse": "^0.4.0",
+    "uglify-js": "^3.3.20",
+    "watch": "^1.0.2"
   },
   "engines": {
     "node": ">= 6.0.0",
